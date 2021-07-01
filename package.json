@@ -52,7 +52,9 @@
   "devDependencies": {
     "auto-changelog": "~2.2.1",
     "babel-plugin-import": "^1.13.3",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
