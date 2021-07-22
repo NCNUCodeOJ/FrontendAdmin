@@ -42,6 +42,7 @@ const Item = (props) => {
       type: 'set', customNavBar: () => {
         return (
           <>
+            <CSidebarNavItem to='/dashboard' onClick={backToCourseList} name='首頁' icon='cil-speedometer' />
             <CSidebarNavItem to='/course/courselist' onClick={backToCourseList} name='返回' icon='cil-arrowCircleLeft' />
             <CCreateElement
               items={HomeWorkSideBar}
