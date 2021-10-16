@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   CContainer,
@@ -131,18 +131,6 @@ const Trash = () => {
   );
 }
 
-const Question = () => {
-  return (
-    <>
-      <div>
-        <CRow sm="12" md="12" className="my-2">
-          <h4 className="my-auto font-weight-bold">題目:</h4>
-        </CRow>
-      </div>
-    </>
-  );
-}
-
 const CreateExam = () => {
   const cloneQuestionTopic = (element) => {
     // title input
@@ -205,20 +193,24 @@ const CreateExam = () => {
           </CRow>
         </CCol>
 
-        <Question />
-        <CRow sm="10" md="10" className="my-2">
-          <CCol xs="9" sm="9" md="9">
-            <CButton
-              variant="outline"
-              color="dark"
-              type="button"
-              component="a"
-              href={`#course/createquestion`}
-              className="btn-block">
-              <CIcon name="cil-plus" className="px-0" custom-size="md" />
-            </CButton>
-          </CCol>
+        <CRow sm="12" md="12" className="my-2">
+          <h4 className="my-auto font-weight-bold">題目:</h4>
         </CRow>
+        <CCol id="allQuestion">
+          <CRow sm="10" md="10" className="my-2">
+            <CCol xs="9" sm="9" md="9">
+              <CButton
+                variant="outline"
+                color="dark"
+                type="button"
+                component="a"
+                href={`#course/createquestion`}
+                className="btn-block">
+                <CIcon name="cil-plus" className="px-0" custom-size="md" />
+              </CButton>
+            </CCol>
+          </CRow>
+        </CCol>
       </CContainer>
     </>
   )
