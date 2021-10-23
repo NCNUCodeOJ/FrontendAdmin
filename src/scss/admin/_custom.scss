@@ -1,4 +1,25 @@
 // Here you can add other styles
-.question-table td,tr{
-  background-color: white;
+.question-table table,
+thead {
+  background-color: #636f83;
+  color: white;
+  position: sticky;
+  top: 0px;
+}
+
+.stickyTable table {
+  border-collapse: separate;
+  border-spacing: 0px 0.5px;
+  position: relative;
+
+}
+
+.stickyTableBody table,
+tbody {
+  background-color: rgb(255, 255, 255);
+}
+
+.table-responsive > div:nth-of-type(2){
+  max-height: 55vh;
+  overflow-y: auto;
 }

@@ -2,31 +2,29 @@ import React, { useState, useEffect } from 'react';
 import {
   CContainer, CButton, CRow,
   CCol, CDataTable,
-} from '@coreui/react'
-import {
-  Checkbox
-} from '@material-ui/core';
-
+} from '@coreui/react';
 const QuestionList = (props) => {
   return (
     <>
       <CDataTable
-        className="question-table"
+        className="question-table stickyTable stickyTableBody"
         items={props.items}
         fields={props.fields}
-        tableFilter="{lazy: true,
-                      label: '待選題目',
-                      placeholder: '請輸入關鍵字'}"
+        tableFilter={{
+          lazy: true,
+          label: '搜尋',
+          placeholder: '請輸入關鍵字'
+        }}
+        hover
         sorter
         outlined
-        color="green"
-        striped={true}
+        responsive={false}
         scopedSlots={{
           'check_box':
             (item, index) => {
               return (
                 <td className="py-2">
-                  <Checkbox />
+                  <input type="checkbox" />
                 </td>
               )
             },
@@ -65,18 +63,104 @@ const CreateQuestion = () => {
         question: 0,
         questionType: "程式設計",
         questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 2
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 3
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      }
+      ,
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      }
+      ,
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
+      },
+      {
+        id: 2,
+        question: 0,
+        questionType: "程式設計",
+        questionDifficulty: 1
       }
     ]);
   }, []);
   const fields = [
-    { key: 'check_box', label: '勾選', _style: { width: '1%' } },
-    { key: 'questionDifficulty', label: '難易度', _style: { width: '1%' } },
-    { key: 'questionType', label: '題型', _style: { width: '10%' } },
-    { key: 'question', label: '題目', _style: { width: '20%' }, sorter: false },
+    { key: 'check_box', label: '勾選', _style: { width: '5%' } },
+    { key: 'questionDifficulty', label: '難易度', _style: { width: '5%' } },
+    { key: 'questionType', label: '題型', _style: { width: '20%' } },
+    { key: 'question', label: '題目', _style: { width: '60%' }, sorter: false },
     {
       key: 'view_details',
       label: '預覽',
-      _style: { width: '5%' },
+      _style: { width: '10%' },
       sorter: false
     }
   ];
@@ -95,6 +179,7 @@ const CreateQuestion = () => {
             </CButton>
           </CCol>
         </CRow>
+
         <CRow xs="12" sm="12" md="12" className="my-2">
           <CCol xs="12" sm="12" md="6">
             <CRow sm="12" md="12">
@@ -113,19 +198,49 @@ const CreateQuestion = () => {
                 </CButton>
               </CCol>
             </CRow>
-            <QuestionList
-              items={allQuestion}
-              fields={fields}
-            />
+            <CRow className="table-responsive my-2 mx-0 p-0" >
+              <QuestionList
+                items={allQuestion}
+                fields={fields} />
+            </CRow>
           </CCol>
-
-
-
           <CCol xs="12" sm="12" md="6">
-            <h5 className="my-auto">題目預覽</h5>
+            <CRow sm="12" md="12">
+              <h4 className="my-auto">題目預覽</h4>
+            </CRow>
+            <CRow className="table-responsive my-2 mx-0 p-0" >
+              <textarea class="form-control">
+              </textarea>
+            </CRow>
           </CCol>
         </CRow>
 
+
+        <CRow xs="12" sm="12" md="12" className="my-2">
+          <CCol xs="12" sm="12" md="6">
+            <CRow sm="12" md="12">
+              <CCol xs="5" sm="5" md="6">
+                <h4 className="my-auto">已選題目</h4>
+              </CCol>
+              <CCol xs="5" sm="5" md="4" className="ml-auto d-flex flex-column">
+                <CButton
+                  type="button"
+                  component="a"
+                  color="danger"
+                  variant="outline"
+                  className="my-auto float-right"
+                  href={`#course/createquestion`}>
+                  移除題目
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="table-responsive my-2 mx-0 p-0" >
+              <QuestionList
+                items={allQuestion}
+                fields={fields} />
+            </CRow>
+          </CCol>
+        </CRow>
       </CContainer>
     </>
   )
