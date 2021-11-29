@@ -30,28 +30,25 @@ const CourseSideBar = [
 ]
 
 const usersData = [
-  { id: 0, 課程名稱: '程式設計(上)', 授課老師: '俞旭昇' },
-  { id: 1, 課程名稱: '程式設計(下)', 授課老師: '俞旭昇' },
-  { id: 2, 課程名稱: '軟體工程(上)', 授課老師: '陳建宏' },
-  { id: 3, 課程名稱: '網頁設計(上)', 授課老師: '陳彥錚' },
-  { id: 4, 課程名稱: '網頁設計(下)', 授課老師: '陳彥錚' },
-  { id: 5, 課程名稱: '軟體工程(下)', 授課老師: '陳建宏' },
-  { id: 6, 課程名稱: '1091 程式設計', 授課老師: '俞旭昇' },
-  { id: 7, 課程名稱: '1092 程式設計', 授課老師: '俞旭昇' },
+  { id: 0, 學號: '107213001', 學生姓名: '張一', 信箱: 's107213001@mail1.ncnu.edu.tw' },
+  { id: 1, 學號: '107213002', 學生姓名: '張二', 信箱: 's107213002@mail1.ncnu.edu.tw' },
+  { id: 2, 學號: '107213003', 學生姓名: '張三', 信箱: 's107213003@mail1.ncnu.edu.tw' },
+  { id: 3, 學號: '107213004', 學生姓名: '張四', 信箱: 's107213004@mail1.ncnu.edu.tw' },
+  { id: 4, 學號: '107213005', 學生姓名: '張五', 信箱: 's107213005@mail1.ncnu.edu.tw' },
+  { id: 5, 學號: '107213006', 學生姓名: '張六', 信箱: 's107213006@mail1.ncnu.edu.tw' },
+  { id: 6, 學號: '107213007', 學生姓名: '張七', 信箱: 's107213007@mail1.ncnu.edu.tw' },
+  { id: 7, 學號: '107213008', 學生姓名: '張八', 信箱: 's107213008@mail1.ncnu.edu.tw' },
 ]
 
 const fields = [
-  { key: '課程名稱', _style: { width: '30%' } },
-  { key: '授課老師', _style: { width: '25%' } },
-  '修改',
-  '刪除',
-  { key: '查看學生名單', _style: { width: '15%'} },
-  { key: '進入作業/測驗', _style: { width: '15%'} }
+  { key: '學號', _style: { width: '15%' } },
+  { key: '學生姓名', _style: { width: '10%' } },
+  { key: '信箱', _style: { width: '30%' } },
 ]
 
 
 
-const CourseList = () => {
+const StudentList = () => {
   const dispatch = useDispatch();
   const backToCourseList = () => {
     dispatch({ type: 'set', customNavBar: null });
@@ -86,7 +83,7 @@ const CourseList = () => {
   }
   return (
     <>
-      <div><h1><strong>國立暨南國際大學-課程管理</strong></h1></div>
+      <div><h1><strong>程式設計(上)-學生名單</strong></h1></div>
       <CButton
         color="primary"
         shape="spill"
@@ -94,38 +91,22 @@ const CourseList = () => {
         onClick={toggle}
         className="float-right"
       >
-        新增課程
+        新增學生
       </CButton>
       <CModal
         show={modal}
         onClose={toggle}
       >
-        <CModalHeader closeButton><h3>新增課程</h3></CModalHeader>
+        <CModalHeader closeButton><h3>新增學生</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-className"><h5>課程名稱</h5></CLabel>
+                <CLabel htmlFor="nf-className"><h5>學生姓名</h5></CLabel>
                 <CInput
-                  type="className"
-                  id="className"
-                  name="className"
-                  placeholder="請輸入課程名稱.."
-                  autoComplete="className"
+                  name="studentName"
+                  placeholder="請輸入學生姓名.."
                 />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="nf-teacherName"><h5>授課老師</h5></CLabel>
-                <CSelect
-                  name="teacherName"
-                  placeholder="俞旭昇"
-                // autoComplete="current-teacherName"
-                >
-                  <option>俞旭昇</option>
-                  <option>陳彥錚</option>
-                  <option>陳建宏</option>
-                  <option>姜美玲</option>
-                </CSelect>
               </CFormGroup>
             </CForm>
           </CCol>
@@ -242,7 +223,7 @@ const CourseList = () => {
                 </td>
               )
             },
-            '查看學生名單':
+          '查看學生名單':
             () => {
               return (
                 <td className="py-2">
@@ -250,6 +231,7 @@ const CourseList = () => {
                     color="primary"
                     shape="spill"
                     size="sm"
+                    onClick={goToHomeworkList}
                     href={`#course/studentlist`}
                   >
                     查看學生名單
@@ -278,4 +260,4 @@ const CourseList = () => {
     </>
   )
 }
-export default CourseList;
+export default StudentList;
