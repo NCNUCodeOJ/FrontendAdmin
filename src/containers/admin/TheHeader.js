@@ -3,18 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   CHeader,
   CToggler,
-  CHeaderBrand,
   CHeaderNav,
-  CHeaderNavItem,
-  CHeaderNavLink,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 // routes config
-import routes from '../../routes/admin'
+// import routes from '../../routes/admin'
 
 import {
   TheHeaderDropdown,
@@ -46,40 +39,15 @@ const TheHeader = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon name="logo" height="48" alt="Logo"/>
-      </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
-        <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/dashboard">儀表板</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink href="/">首頁</CHeaderNavLink>
-        </CHeaderNavItem>
+        <h4 className="card-title mb-0">國立暨南國際大學教學輔助系統</h4>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
         <TheHeaderDropdown/>
       </CHeaderNav>
-
-      <CSubheader className="px-3 justify-content-between">
-        <CBreadcrumbRouter
-          className="border-0 c-subheader-nav m-0 px-0 px-md-3"
-          routes={routes}
-        />
-        <div className="d-md-down-none mfe-2 c-subheader-nav">
-          <CLink
-            className="c-subheader-nav-link"
-            aria-current="page"
-            href="/"
-          >
-            <CIcon name="cil-home" alt="home" />&nbsp;首頁
-          </CLink>
-        </div>
-      </CSubheader>
     </CHeader>
   )
 }
-
 export default TheHeader

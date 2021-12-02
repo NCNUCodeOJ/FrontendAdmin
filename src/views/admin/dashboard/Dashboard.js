@@ -1,8 +1,5 @@
 import React from 'react'
 import {
-  CBadge,
-  CButton,
-  CButtonGroup,
   CCard,
   CCardBody,
   CCardFooter,
@@ -12,45 +9,23 @@ import {
   CRow,
   CCallout
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 const Dashboard = () => {
   return (
     <>
-
       <CCard>
         <CCardBody>
           <CRow>
             <CCol sm="5">
-              <h4 id="traffic" className="card-title mb-0">Traffic</h4>
-              <div className="small text-muted">November 2017</div>
-            </CCol>
-            <CCol sm="7" className="d-none d-md-block">
-              <CButton color="primary" className="float-right">
-                <CIcon name="cil-cloud-download"/>
-              </CButton>
-              <CButtonGroup className="float-right mr-3">
-                {
-                  ['Day', 'Month', 'Year'].map(value => (
-                    <CButton
-                      color="outline-secondary"
-                      key={value}
-                      className="mx-0"
-                      active={value === 'Month'}
-                    >
-                      {value}
-                    </CButton>
-                  ))
-                }
-              </CButtonGroup>
+              <h4 id="traffic" className="card-title mb-0">系統狀態</h4>
             </CCol>
           </CRow>
         </CCardBody>
         <CCardFooter>
           <CRow className="text-center">
-            <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Visits</div>
-              <strong>29.703 Users (40%)</strong>
+            <CCol md sm="12" className="align-self-center" >
+              <div className="text"><h4>網路狀態</h4></div>
+              <strong>正常</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -59,41 +34,12 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Unique</div>
-              <strong>24.093 Users (20%)</strong>
+              <div className="text"><h4>伺服器狀態</h4></div>
+              <strong>正常</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
-                color="info"
-                value={40}
-              />
-            </CCol>
-            <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Pageviews</div>
-              <strong>78.706 Views (60%)</strong>
-              <CProgress
-                className="progress-xs mt-2"
-                precision={1}
-                color="warning"
-                value={40}
-              />
-            </CCol>
-            <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">New Users</div>
-              <strong>22.123 Users (80%)</strong>
-              <CProgress
-                className="progress-xs mt-2"
-                precision={1}
-                color="danger"
-                value={40}
-              />
-            </CCol>
-            <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Bounce Rate</div>
-              <strong>Average Rate (40.15%)</strong>
-              <CProgress
-                className="progress-xs mt-2"
-                precision={1}
+                color="success"
                 value={40}
               />
             </CCol>
@@ -105,7 +51,7 @@ const Dashboard = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Traffic {' & '} Sales
+              <h4 id="traffic" className="card-title mb-0">統計數據</h4>
             </CCardHeader>
             <CCardBody>
               <CRow>
@@ -114,21 +60,21 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm="6">
                       <CCallout color="info">
-                        <small className="text-muted">New Clients</small>
+                        <small className="text-muted">目前上線人數</small>
                         <br />
                         <strong className="h4">9,123</strong>
                       </CCallout>
                     </CCol>
                     <CCol sm="6">
                       <CCallout color="danger">
-                        <small className="text-muted">Recurring Clients</small>
+                        <small className="text-muted">課程總數</small>
                         <br />
                         <strong className="h4">22,643</strong>
                       </CCallout>
                     </CCol>
                   </CRow>
 
-                  <hr className="mt-0" />
+                  {/* <hr className="mt-0" />
 
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
@@ -215,7 +161,7 @@ const Dashboard = () => {
                       <sup className="px-1"><CBadge shape="pill" color="danger">&nbsp;</CBadge></sup>
                       Recurring clients
                     </small>
-                  </div>
+                  </div> */}
                 </CCol>
 
                 <CCol xs="12" md="6" xl="6">
@@ -223,21 +169,21 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm="6">
                       <CCallout color="warning">
-                        <small className="text-muted">Pageviews</small>
+                        <small className="text-muted">學校總數</small>
                         <br />
                         <strong className="h4">78,623</strong>
                       </CCallout>
                     </CCol>
                     <CCol sm="6">
                       <CCallout color="success">
-                        <small className="text-muted">Organic</small>
+                        <small className="text-muted">系統使用者總數</small>
                         <br />
                         <strong className="h4">49,123</strong>
                       </CCallout>
                     </CCol>
                   </CRow>
 
-                  <hr className="mt-0" />
+                  {/* <hr className="mt-0" />
 
                   <div className="progress-group mb-4">
                     <div className="progress-group-header">
@@ -268,10 +214,10 @@ const Dashboard = () => {
                     <div className="progress-group-bars">
                       <CProgress className="progress-xs" color="success" value="56" />
                     </div>
-                  </div>
+                  </div> */}
 
 
-                  <div className="progress-group">
+                  {/* <div className="progress-group">
                     <div className="progress-group-header">
                       <CIcon name="cib-facebook" className="progress-group-icon" />
                       <span className="title">Facebook</span>
@@ -305,14 +251,14 @@ const Dashboard = () => {
                     <CButton color="link" size="sm" className="text-muted">
                       <CIcon name="cil-options" />
                     </CButton>
-                  </div>
+                  </div> */}
 
                 </CCol>
               </CRow>
 
               <br />
 
-              <table className="table table-hover table-outline mb-0 d-none d-sm-table">
+              {/* <table className="table table-hover table-outline mb-0 d-none d-sm-table">
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
@@ -536,7 +482,7 @@ const Dashboard = () => {
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
 
             </CCardBody>
           </CCard>
