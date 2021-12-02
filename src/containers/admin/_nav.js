@@ -23,18 +23,17 @@ const _nav = [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: '課程管理',
-    to: '/course/courselist',
-    icon: <CIcon name="cil-education" customClasses="c-sidebar-nav-icon" />,
+    name: '使用者介面',
+    icon: <CIcon name="cil-contact" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
     }
   },
   {
     _tag: 'CSidebarNavItem',
-    name: '比賽管理',
-    // to: '/course/homeworklist',
-    icon: <CIcon name="cil-laptop" customClasses="c-sidebar-nav-icon" />,
+    name: '課程管理',
+    to: '/course/courselist',
+    icon: <CIcon name="cil-education" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
     }

@@ -12,5 +12,12 @@ const logout = () => {
   return axios.post(`${serverURL}/accounts/logout/`);
 }
 
+const newExamSubmition=(MultipleAnswer,TrueFalseAnswer,ShortAnswer)=>{
+  return axios.post(`${serverURL}/high/info`,{
+    "MultipleAnswer":MultipleAnswer,
+    "TrueFalseAnswer":TrueFalseAnswer,
+    "ShortAnswer":ShortAnswer,
+  });
+}
 
-export {getUserInfo, logout, getHighClass};
+export {getUserInfo, logout, newExamSubmition};

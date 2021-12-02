@@ -30,18 +30,19 @@ const CourseSideBar = [
 ]
 
 const usersData = [
-  { id: 0, 學號: '107213001', 學生姓名: '張一', 信箱: 's107213001@mail1.ncnu.edu.tw' },
-  { id: 1, 學號: '107213002', 學生姓名: '張二', 信箱: 's107213002@mail1.ncnu.edu.tw' },
-  { id: 2, 學號: '107213003', 學生姓名: '張三', 信箱: 's107213003@mail1.ncnu.edu.tw' },
-  { id: 3, 學號: '107213004', 學生姓名: '張四', 信箱: 's107213004@mail1.ncnu.edu.tw' },
-  { id: 4, 學號: '107213005', 學生姓名: '張五', 信箱: 's107213005@mail1.ncnu.edu.tw' },
-  { id: 5, 學號: '107213006', 學生姓名: '張六', 信箱: 's107213006@mail1.ncnu.edu.tw' },
-  { id: 6, 學號: '107213007', 學生姓名: '張七', 信箱: 's107213007@mail1.ncnu.edu.tw' },
-  { id: 7, 學號: '107213008', 學生姓名: '張八', 信箱: 's107213008@mail1.ncnu.edu.tw' },
+  { id: 0, 學號: '107213001', 使用者名稱: 'apple', 學生姓名: '張一', 信箱: 's107213001@mail1.ncnu.edu.tw' },
+  { id: 1, 學號: '107213002', 使用者名稱: 'beef', 學生姓名: '張二', 信箱: 's107213002@mail1.ncnu.edu.tw' },
+  { id: 2, 學號: '107213003', 使用者名稱: 'cucumba', 學生姓名: '張三', 信箱: 's107213003@mail1.ncnu.edu.tw' },
+  { id: 3, 學號: '107213004', 使用者名稱: 'donut', 學生姓名: '張四', 信箱: 's107213004@mail1.ncnu.edu.tw' },
+  { id: 4, 學號: '107213005', 使用者名稱: 'egg', 學生姓名: '張五', 信箱: 's107213005@mail1.ncnu.edu.tw' },
+  { id: 5, 學號: '107213006', 使用者名稱: 'fruit', 學生姓名: '張六', 信箱: 's107213006@mail1.ncnu.edu.tw' },
+  { id: 6, 學號: '107213007', 使用者名稱: 'grapes', 學生姓名: '張七', 信箱: 's107213007@mail1.ncnu.edu.tw' },
+  { id: 7, 學號: '107213008', 使用者名稱: 'ham', 學生姓名: '張八', 信箱: 's107213008@mail1.ncnu.edu.tw' },
 ]
 
 const fields = [
   { key: '學號', _style: { width: '15%' } },
+  { key: '使用者名稱', _style: { width: '10%' } },
   { key: '學生姓名', _style: { width: '10%' } },
   { key: '信箱', _style: { width: '30%' } },
 ]
@@ -187,12 +188,11 @@ const StudentList = () => {
         items={usersData}
         fields={fields}
         tableFilter
-        // itemsPerPageSelect
+        sorter
         itemsPerPage={10}
         hover
         pagination
         scopedSlots={{
-          // 彈跳視窗 (利用 form 送給後端)
           '修改':
             () => {
               return (

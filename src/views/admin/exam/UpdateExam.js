@@ -10,14 +10,15 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import $ from 'jquery';
 let tempTopicIndex = 1;
 
-const ExamItem = () => {
+const ExamItem = (props) => {
+  const x = props.item;
   return (
     <>
       <div>
         <CRow sm="12" md="10">
           <CCol sm="12" md="12" className="mx-auto my-1">
             <h1 className="font-weight-bold card-title mb-0">
-              新增測驗
+              修改測驗
             </h1>
             <hr />
           </CCol>
@@ -33,6 +34,7 @@ const ExamItem = () => {
                 'maxLength': 1
               }}
               placeholder="請輸入測驗標題"
+              value={x.examTopic}
               type='text' />
           </CCol>
         </CRow>
@@ -48,6 +50,7 @@ const ExamItem = () => {
                 'maxLength': 1
               }}
               placeholder="請輸入測驗說明"
+              value={x.examDescription}
               type='text' />
           </CCol>
         </CRow>
@@ -56,7 +59,7 @@ const ExamItem = () => {
           <CCol sm="10" md="8">
             <Rating
               name="examDifficulty"
-              defaultValue={0}
+              defaultValue={x.examDifficulty}
               precision={1}
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
             />
@@ -75,7 +78,8 @@ const ExamItem = () => {
                     'aria-label': 'naked',
                     'maxLength': 1
                   }}
-                  type='datetime-local' />
+                  type='datetime-local'
+                  value={x.examStartDate} />
               </CCol>
             </CRow>
           </CCol>
@@ -91,7 +95,8 @@ const ExamItem = () => {
                     'aria-label': 'naked',
                     'maxLength': 1
                   }}
-                  type='datetime-local' />
+                  type='datetime-local'
+                  value={x.examEndDate} />
               </CCol>
             </CRow>
           </CCol>
@@ -132,7 +137,7 @@ const Trash = () => {
   );
 }
 
-const CreateExam = () => {
+const UpdateExam = () => {
   const cloneQuestionTopic = (element) => {
     // title input
     const groups = document.querySelectorAll('.group');
@@ -159,10 +164,22 @@ const CreateExam = () => {
     tempTopicIndex++;
   };
 
+  const examData = [{
+    "id": 0,
+    "examTopic": "Hello World!",
+    "examDescription": "請計算出兩數之和，並輸出",
+    "examDifficulty": 3.5,
+    "examStartDate": "2021-01-10T09:10",
+    "examEndDate": "2021-01-10T12:00",
+  }];
   return (
     <>
       <CContainer className="px-2">
-        <ExamItem />
+        {
+          examData.map((x, index) => (
+            <ExamItem item={x} index={index} />
+          ))
+        }
         <div id="allTopic">
           <CRow className="group py-2" >
             <h3 className='font-weight-bold mx-1' id="questionTopic0">
@@ -185,6 +202,7 @@ const CreateExam = () => {
                           'maxLength': 1
                         }}
                         placeholder="第一大題"
+                        value="第一大題"
                         type='text' />
                     </CCol>
                   </CRow>
@@ -204,7 +222,8 @@ const CreateExam = () => {
                           'maxLength': 1
                         }}
                         placeholder="60"
-                        type='text' />
+                        type='text'
+                        value='60' />
                     </CCol>
                   </CRow>
                 </CCol>
@@ -253,11 +272,11 @@ const CreateExam = () => {
         <CCol xs="3" sm="3" md="3" className='my-3 mx-auto d-flex flex-column'>
           <CButton type="button" component="a" color="primary"
             className="my-auto float-right" href={`#course/createquestion`}>
-            提交
+            修改
           </CButton>
         </CCol>
       </CContainer >
     </>
   )
 }
-export default CreateExam;
+export default UpdateExam;

@@ -12,7 +12,7 @@ const CourseSideBar = [
   {
     _tag: 'CSidebarNavItem',
     name: '測驗管理',
-    to: '/course/examinfo',
+    to: '/course/examlist',
     icon: 'cil-code',
     badge: {
       color: 'info',

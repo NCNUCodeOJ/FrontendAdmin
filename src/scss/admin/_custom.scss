@@ -1,8 +1,5 @@
 // Here you can add other styles
-.question-table table,
-thead {
-  background-color: #636f83;
-  color: white;
+.question-table table, thead {
   position: sticky;
   top: 0px;
 }
@@ -22,4 +19,10 @@ tbody {
 .table-responsive > div:nth-of-type(2){
   max-height: 55vh;
   overflow-y: auto;
+}
+
+#createQuestionTextArea {
+  max-height: 30vh;
+  overflow-y: auto;
+  font-size: large;
 }

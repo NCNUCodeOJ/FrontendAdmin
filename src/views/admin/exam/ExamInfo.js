@@ -10,10 +10,6 @@ import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { newExamSubmition } from '../../../api/page/api';
 
-const UpdateExamLink = (props) => {
-  return <CButton type="button" component="a" {...props} />;
-}
-
 function createQuestion(type, question, option1, option2, option3, option4) {
   return { type, question, option1, option2, option3, option4 };
   // type:
@@ -34,12 +30,6 @@ const ExamItem = (props) => {
         <CRow sm="12" md="10" className="mx-auto">
           <CCol sm="7" md="8">
             <h1 className="card-title mb-0">{x.examName}</h1>
-          </CCol>
-          <CCol sm="3" md="2" className="ml-auto d-flex flex-column">
-            <UpdateExamLink color="success" className="float-right"
-              href={`#course/homeworklist`}>
-              修改測驗
-            </UpdateExamLink>
           </CCol>
         </CRow>
         <hr />
@@ -90,7 +80,6 @@ const ExamInfo = () => {
   const [TrueFalseAnswer, setTrueFalseAnswer] = useState("");
   const [ShortAnswer, setShortAnswer] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [errorComponent, setErrorComponent] = useState([]);
   useEffect(() => {
     setExam([
       {
@@ -125,26 +114,21 @@ const ExamInfo = () => {
       pauseOnHover: true,
       draggable: true,
     };
-    const errorList = [];
     let errorMsg = "";
     let errorOccurred = false;
     if (MultipleAnswer !== "1" && MultipleAnswer !== "2" && MultipleAnswer !== "3" && MultipleAnswer !== "4") {
       errorMsg += "選擇題請填寫1-4其中一個編號 ";
-      errorList.push("MultipleAnswer");
       errorOccurred = true;
     }
     if (TrueFalseAnswer !== "T" && TrueFalseAnswer !== "F") {
       errorMsg += "是非題請填寫'T'或'F' ";
-      errorList.push("TrueFalseAnswer");
       errorOccurred = true;
     }
     if (ShortAnswer === "") {
       errorMsg += "未填寫簡答題";
-      errorList.push("ShortAnswer");
       errorOccurred = true;
     }
     setErrorMsg(errorMsg);
-    setErrorComponent(errorList);
     if (errorOccurred)
       return;
     newExamSubmition(MultipleAnswer, TrueFalseAnswer, ShortAnswer)
@@ -161,6 +145,9 @@ const ExamInfo = () => {
   return (
     <>
       <CContainer className="px-2">
+        <div class="alert alert-danger" role="alert">
+          {errorMsg}
+        </div>
         {
           Exam.map((x) => (
             <ExamItem key={x.id} item={x} />

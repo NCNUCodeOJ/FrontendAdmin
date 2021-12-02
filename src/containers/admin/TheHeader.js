@@ -6,9 +6,6 @@ import {
   CHeaderNav,
 } from '@coreui/react'
 
-// routes config
-import routes from '../../routes/admin'
-
 import {
   TheHeaderDropdown,
 }  from './index'
