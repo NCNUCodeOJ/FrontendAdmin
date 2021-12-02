@@ -1,6 +1,5 @@
-import React from 'react'
+import React from 'react';
 import CIcon from '@coreui/icons-react'
-
 const _nav = [
   {
     _tag: 'CSidebarNavItem',
@@ -9,13 +8,12 @@ const _nav = [
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
     }
   },
   {
     _tag: 'CSidebarNavItem',
     name: '公告管理',
-    // to: '/course/courselist',
+    to: '/announcement/Announcement',
     icon: <CIcon name="cil-bullhorn" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
@@ -39,10 +37,19 @@ const _nav = [
     }
   },
   {
-    _tag: 'CSidebarNavDropdown',
-    name: '基本設定',
-    // to: '/course/homeworklist',
-    icon: <CIcon name="cil-settings" customClasses="c-sidebar-nav-icon" />,
+    _tag: 'CSidebarNavItem',
+    name: '使用者帳號管理',
+    to: '/useraccountmanage',
+    icon: <CIcon name='cil-Address-book' customClasses="c-sidebar-nav-icon" />,
+    badge: {
+      color: 'info',
+    }
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: '系統資訊',
+    to: '/languagesupport',
+    icon: <CIcon name="cil-info" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
     }

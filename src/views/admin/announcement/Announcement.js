@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import {
-  CButton, CDataTable, CModal, CModalHeader,
+  CButton,
+  CDataTable, CModal, CModalHeader,
   CModalBody, CModalFooter, CCol,
   CForm, CFormGroup, CLabel,
-  CInput
-} from '@coreui/react'
+  CInput,
+} from '@coreui/react';
 
 
 const usersData = [
-  { id: 0, 作業名稱: '訂機票出去玩', 剩餘時間: '00:30:12' },
-  { id: 1, 作業名稱: '八皇后在哪裡', 剩餘時間: '12:38:23' },
-  { id: 2, 作業名稱: '麻將好好玩', 剩餘時間: '1 day' },
-  { id: 3, 作業名稱: '有趣的鋪克牌', 剩餘時間: '2 day' },
-  { id: 4, 作業名稱: '馬拉松接力賽', 剩餘時間: '4 day' },
-  { id: 5, 作業名稱: '走馬炮', 剩餘時間: '5 day' },
-  { id: 6, 作業名稱: '閏年判斷計算機', 剩餘時間: '16 day' },
-  { id: 7, 作業名稱: '迷宮遊戲', 剩餘時間: '21 day' },
+  { id: 0, 公告標題: '系統維護', 公告時間: '110/10/26 20:00 AM' },
+  { id: 1, 公告標題: '比賽新增功能', 公告時間: '110/10/24 13:00 AM' },
+  { id: 2, 公告標題: '作業繳交教學', 公告時間: '110/10/20 09:00 AM' },
+  { id: 3, 公告標題: '忘記密碼怎麼辦', 公告時間: '110/10/16 18:00 AM' },
 ]
 
 const fields = [
-  { key: '作業名稱', _style: { width: '30%' } },
-  { key: '剩餘時間', _style: { width: '25%' } },
-  '刪除',
+  { key: '公告標題', _style: { width: '40%' } },
+  { key: '公告時間', _style: { width: '30%' } },
   '修改',
-  { key: '查看', _style: { width: '10%' } },
+  '刪除',
+  '查看'
 ]
 
-const HomeWorkList = () => {
+
+
+const Announcement = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -41,39 +40,43 @@ const HomeWorkList = () => {
   }
   return (
     <>
-      <div><h1><strong>作業管理</strong></h1></div>
+      <div><h1 className="card-title mb-0"><strong>公告管理</strong></h1></div>
       <CButton
         color="primary"
         shape="spill"
         position="top-right"
         onClick={toggle}
         className="float-right"
-        href='#course/createhomework'
       >
-        新增作業
+        新增公告
       </CButton>
       <CModal
         show={modal}
         onClose={toggle}
       >
-        <CModalHeader closeButton><h3>新增作業</h3></CModalHeader>
+        <CModalHeader closeButton><h3>新增公告</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-homeWorkName"><h5>作業名稱</h5></CLabel>
+                <CLabel htmlFor="nf-className"><h5>公告名稱</h5></CLabel>
                 <CInput
-                  type="homeWorkName"
-                  id="homeWorkName"
-                  name="homeWorkName"
-                  placeholder="請輸入作業名稱.."
-                  autoComplete="homeWorkName"
+                  type="className"
+                  id="className"
+                  name="className"
+                  placeholder="請輸入課程名稱"
+                  autoComplete="className"
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="nf-submitTime"><h5>規定繳交日期</h5></CLabel>
-                {/* 還要再想想要怎麼填入時間 */}
-                <CInput defaultValue={new Date()} />
+                <CLabel htmlFor="nf-teacherName"><h5>公告內容</h5></CLabel>
+                <CInput
+                  type="className"
+                  id="className"
+                  name="className"
+                  placeholder="請輸入公告之詳細內容"
+                  autoComplete="className"
+                />
               </CFormGroup>
             </CForm>
           </CCol>
@@ -90,24 +93,29 @@ const HomeWorkList = () => {
         show={modalEdit}
         onClose={toggleEdit}
       >
-        <CModalHeader closeButton><h3>修改作業資訊</h3></CModalHeader>
+        <CModalHeader closeButton><h3>修改公告資訊</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-homeWorkNameEdit"><h5>作業名稱</h5></CLabel>
+                <CLabel htmlFor="nf-courseNameEdit"><h5>公告名稱</h5></CLabel>
                 <CInput
-                  type="homeWorkNameEdit"
-                  id="homeWorkNameEdit"
-                  name="homeWorkNameEdit"
-                  placeholder="八皇后在哪裡"
+                  type="courseNameEdit"
+                  id="courseNameEdit"
+                  name="courseNameEdit"
+                  placeholder="程式設計(上)"
                 // autoComplete="courseName"
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="nf-submitTimeEdit"><h5>規定繳交時間</h5></CLabel>
-                {/* 還要再想想要怎麼填入時間 */}
-                <CInput defaultValue={new Date()} />
+              <CLabel htmlFor="nf-teacherName"><h5>公告內容</h5></CLabel>
+                <CInput
+                  type="className"
+                  id="className"
+                  name="className"
+                  placeholder="請輸入公告之詳細內容"
+                  autoComplete="className"
+                />
               </CFormGroup>
             </CForm>
           </CCol>
@@ -124,12 +132,12 @@ const HomeWorkList = () => {
         show={modalDelete}
         onClose={toggleDelete}
       >
-        <CModalHeader closeButton><h3>刪除作業</h3></CModalHeader>
+        <CModalHeader closeButton><h3>刪除公告</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-className"><h5>確認要刪掉該作業？</h5></CLabel>
+                <CLabel htmlFor="nf-className"><h5>確認要刪掉該公告？</h5></CLabel>
               </CFormGroup>
             </CForm>
           </CCol>
@@ -160,7 +168,7 @@ const HomeWorkList = () => {
                     color="info"
                     shape="spill"
                     size="sm"
-                    href='#course/updatehomework'
+                    onClick={toggleEdit}
                   >
                     修改
                   </CButton>
@@ -190,7 +198,8 @@ const HomeWorkList = () => {
                     color="success"
                     shape="spill"
                     size="sm"
-                    href={`#course/homeworkstudentlist`}
+                    // onClick={goToHomeworkList}
+                    href={`#announcement/announcementcontent`}
                   >
                     查看
                   </CButton>
@@ -202,4 +211,4 @@ const HomeWorkList = () => {
     </>
   )
 }
-export default HomeWorkList;
+export default Announcement;

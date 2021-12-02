@@ -1,77 +1,33 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
-  CButton, CCreateElement, CSidebarNavItem,
-  CDataTable, CModal, CModalHeader,
+  CButton, CDataTable, CModal, CModalHeader,
   CModalBody, CModalFooter, CCol,
   CForm, CFormGroup, CLabel,
   CInput, CSelect,
 } from '@coreui/react';
 
-const CourseSideBar = [
-  {
-    _tag: 'CSidebarNavItem',
-    name: '測驗管理',
-    to: '/course/examlist',
-    icon: 'cil-code',
-    badge: {
-      color: 'info',
-    }
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: '作業管理',
-    to: '/course/homeworklist',
-    icon: 'cil-keyboard',
-    badge: {
-      color: 'info',
-    }
-  }
-]
-
 const usersData = [
-  { id: 0, 課程名稱: '程式設計(上)', 授課老師: '俞旭昇' },
-  { id: 1, 課程名稱: '程式設計(下)', 授課老師: '俞旭昇' },
-  { id: 2, 課程名稱: '軟體工程(上)', 授課老師: '陳建宏' },
-  { id: 3, 課程名稱: '網頁設計(上)', 授課老師: '陳彥錚' },
-  { id: 4, 課程名稱: '網頁設計(下)', 授課老師: '陳彥錚' },
-  { id: 5, 課程名稱: '軟體工程(下)', 授課老師: '陳建宏' },
-  { id: 6, 課程名稱: '1091 程式設計', 授課老師: '俞旭昇' },
-  { id: 7, 課程名稱: '1092 程式設計', 授課老師: '俞旭昇' },
+  { id: 0, 學校名稱: '國立暨南國際大學', 負責人: '俞旭昇' },
+  { id: 1, 學校名稱: '國立台灣大學', 負責人: '俞旭昇' },
+  { id: 2, 學校名稱: '國立清華大學', 負責人: '陳建宏' },
+  { id: 3, 學校名稱: '國立交通大學', 負責人: '陳彥錚' },
+  { id: 4, 學校名稱: '國立台北師範大學', 負責人: '陳彥錚' },
+  { id: 5, 學校名稱: '國立成功大學', 負責人: '陳建宏' },
+  { id: 6, 學校名稱: '國立東海大學', 負責人: '俞旭昇' },
+  { id: 7, 學校名稱: '國立中正大學', 負責人: '俞旭昇' },
 ]
 
 const fields = [
-  { key: '課程名稱', _style: { width: '30%' } },
-  { key: '授課老師', _style: { width: '25%' } },
-  '刪除',
+  { key: '學校名稱', _style: { width: '30%' } },
+  { key: '負責人', _style: { width: '25%' } },
   '修改',
-  { key: '查看學生名單', _style: { width: '12%'} },
-  { key: '進入作業/測驗', _style: { width: '12%'} }
+  '刪除',
+  { key: '進入課程管理', _style: { width: '15%'} },
 ]
 
 
 
-const CourseList = () => {
-  const dispatch = useDispatch();
-  const backToCourseList = () => {
-    dispatch({ type: 'set', customNavBar: null });
-  };
-  const goToHomeworkList = () => {
-    dispatch({
-      type: 'set', customNavBar: () => {
-        return (
-          <>
-            <CSidebarNavItem to='/course/courselist' onClick={backToCourseList} name='返回' icon='cil-arrowCircleLeft' />
-            <CCreateElement
-              items={CourseSideBar}
-              components={{
-                CSidebarNavItem
-              }} />
-          </>
-        )
-      }
-    });
-  };
+const SchoolList = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -86,7 +42,7 @@ const CourseList = () => {
   }
   return (
     <>
-      <div><h1><strong>國立暨南國際大學-課程管理</strong></h1></div>
+      <div><h1><strong>學校管理</strong></h1></div>
       <CButton
         color="primary"
         shape="spill"
@@ -94,28 +50,28 @@ const CourseList = () => {
         onClick={toggle}
         className="float-right"
       >
-        新增課程
+        新增學校
       </CButton>
       <CModal
         show={modal}
         onClose={toggle}
       >
-        <CModalHeader closeButton><h3>新增課程</h3></CModalHeader>
+        <CModalHeader closeButton><h3>新增學校</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-className"><h5>課程名稱</h5></CLabel>
+                <CLabel htmlFor="nf-className"><h5>學校名稱</h5></CLabel>
                 <CInput
                   type="className"
                   id="className"
                   name="className"
-                  placeholder="請輸入課程名稱.."
+                  placeholder="請輸入學校名稱.."
                   autoComplete="className"
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="nf-teacherName"><h5>授課老師</h5></CLabel>
+                <CLabel htmlFor="nf-teacherName"><h5>負責人</h5></CLabel>
                 <CSelect
                   name="teacherName"
                   placeholder="俞旭昇"
@@ -142,12 +98,12 @@ const CourseList = () => {
         show={modalEdit}
         onClose={toggleEdit}
       >
-        <CModalHeader closeButton><h3>修改課程資訊</h3></CModalHeader>
+        <CModalHeader closeButton><h3>修改學校資訊</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-courseNameEdit"><h5>課程名稱</h5></CLabel>
+                <CLabel htmlFor="nf-courseNameEdit"><h5>學校名稱</h5></CLabel>
                 <CInput
                   type="courseNameEdit"
                   id="courseNameEdit"
@@ -157,7 +113,7 @@ const CourseList = () => {
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="nf-teacherNameEdit"><h5>授課老師</h5></CLabel>
+                <CLabel htmlFor="nf-teacherNameEdit"><h5>負責人</h5></CLabel>
                 <CSelect
                   name="teacherNameEdit"
                   placeholder="俞旭昇"
@@ -184,12 +140,12 @@ const CourseList = () => {
         show={modalDelete}
         onClose={toggleDelete}
       >
-        <CModalHeader closeButton><h3>刪除課程</h3></CModalHeader>
+        <CModalHeader closeButton><h3>刪除學校</h3></CModalHeader>
         <CModalBody>
           <CCol sm="12">
             <CForm action="" method="post">
               <CFormGroup>
-                <CLabel htmlFor="nf-className"><h5>確認要刪掉該課程？</h5></CLabel>
+                <CLabel htmlFor="nf-className"><h5>確認要刪掉該學校的所有課程？</h5></CLabel>
               </CFormGroup>
             </CForm>
           </CCol>
@@ -207,26 +163,11 @@ const CourseList = () => {
         fields={fields}
         tableFilter
         // itemsPerPageSelect
-        itemsPerPage={10}
+        itemsPerPage={5}
         hover
         pagination
         scopedSlots={{
           // 彈跳視窗 (利用 form 送給後端)
-          '刪除':
-          () => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="danger"
-                  shape="spill"
-                  size="sm"
-                  onClick={toggleDelete}
-                >
-                  刪除
-                </CButton>
-              </td>
-            )
-          },
           '修改':
             () => {
               return (
@@ -242,22 +183,22 @@ const CourseList = () => {
                 </td>
               )
             },
-            '查看學生名單':
+          '刪除':
             () => {
               return (
                 <td className="py-2">
                   <CButton
-                    color="primary"
+                    color="danger"
                     shape="spill"
                     size="sm"
-                    href={`#course/studentlist`}
+                    onClick={toggleDelete}
                   >
-                    查看學生名單
+                    刪除
                   </CButton>
                 </td>
               )
             },
-          '進入作業/測驗':
+          '進入課程管理':
             () => {
               return (
                 <td className="py-2">
@@ -265,10 +206,9 @@ const CourseList = () => {
                     color="success"
                     shape="spill"
                     size="sm"
-                    onClick={goToHomeworkList}
-                    href={`#course/homeworklist`}
+                    href={`#course/courselist`}
                   >
-                    進入作業/測驗
+                    進入課程管理
                   </CButton>
                 </td>
               )
@@ -278,4 +218,4 @@ const CourseList = () => {
     </>
   )
 }
-export default CourseList;
+export default SchoolList;

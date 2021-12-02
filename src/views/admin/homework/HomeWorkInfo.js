@@ -86,10 +86,6 @@ const HomeWorkItem = (props) => {
             <h1 className="card-title mb-0">{x.homeworkName}</h1>
           </CCol>
           <CCol sm="3" md="2" className="ml-auto d-flex flex-column">
-            <UpdateHomeWorkLink color="success" className="float-right"
-              href={`#course/updatehomework`}>
-              修改作業
-            </UpdateHomeWorkLink>
           </CCol>
         </CRow>
         <hr />

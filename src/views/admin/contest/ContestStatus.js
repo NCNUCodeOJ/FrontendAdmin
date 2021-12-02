@@ -1,33 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
-  CButton, CCreateElement, CSidebarNavItem,
+  CButton,
   CDataTable, CModal, CModalHeader,
   CModalBody, CModalFooter, CCol,
   CForm, CFormGroup, CLabel,
   CInput, CSelect,
 } from '@coreui/react';
-
-const CourseSideBar = [
-  {
-    _tag: 'CSidebarNavItem',
-    name: '測驗管理',
-    to: '/course/examlist',
-    icon: 'cil-code',
-    badge: {
-      color: 'info',
-    }
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: '作業管理',
-    to: '/course/homeworklist',
-    icon: 'cil-keyboard',
-    badge: {
-      color: 'info',
-    }
-  }
-]
 
 const usersData = [
   { id: 0, 課程名稱: '程式設計(上)', 授課老師: '俞旭昇' },
@@ -43,35 +21,12 @@ const usersData = [
 const fields = [
   { key: '課程名稱', _style: { width: '30%' } },
   { key: '授課老師', _style: { width: '25%' } },
-  '刪除',
   '修改',
-  { key: '查看學生名單', _style: { width: '12%'} },
-  { key: '進入作業/測驗', _style: { width: '12%'} }
+  '刪除',
+  { key: '進入作業/測驗', _style: { width: '15%'} }
 ]
 
-
-
-const CourseList = () => {
-  const dispatch = useDispatch();
-  const backToCourseList = () => {
-    dispatch({ type: 'set', customNavBar: null });
-  };
-  const goToHomeworkList = () => {
-    dispatch({
-      type: 'set', customNavBar: () => {
-        return (
-          <>
-            <CSidebarNavItem to='/course/courselist' onClick={backToCourseList} name='返回' icon='cil-arrowCircleLeft' />
-            <CCreateElement
-              items={CourseSideBar}
-              components={{
-                CSidebarNavItem
-              }} />
-          </>
-        )
-      }
-    });
-  };
+const ContestStatus = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -212,21 +167,6 @@ const CourseList = () => {
         pagination
         scopedSlots={{
           // 彈跳視窗 (利用 form 送給後端)
-          '刪除':
-          () => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="danger"
-                  shape="spill"
-                  size="sm"
-                  onClick={toggleDelete}
-                >
-                  刪除
-                </CButton>
-              </td>
-            )
-          },
           '修改':
             () => {
               return (
@@ -242,17 +182,17 @@ const CourseList = () => {
                 </td>
               )
             },
-            '查看學生名單':
+          '刪除':
             () => {
               return (
                 <td className="py-2">
                   <CButton
-                    color="primary"
+                    color="danger"
                     shape="spill"
                     size="sm"
-                    href={`#course/studentlist`}
+                    onClick={toggleDelete}
                   >
-                    查看學生名單
+                    刪除
                   </CButton>
                 </td>
               )
@@ -265,7 +205,7 @@ const CourseList = () => {
                     color="success"
                     shape="spill"
                     size="sm"
-                    onClick={goToHomeworkList}
+                    // onClick={goToHomeworkList}
                     href={`#course/homeworklist`}
                   >
                     進入作業/測驗
@@ -278,4 +218,4 @@ const CourseList = () => {
     </>
   )
 }
-export default CourseList;
+export default ContestStatus;

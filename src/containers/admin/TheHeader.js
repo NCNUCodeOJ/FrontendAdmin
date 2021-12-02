@@ -47,5 +47,4 @@ const TheHeader = () => {
     </CHeader>
   )
 }
-
 export default TheHeader
