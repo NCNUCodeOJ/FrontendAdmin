@@ -19,10 +19,6 @@ import {
 } from '@material-ui/icons/';
 import Editor from "@monaco-editor/react";
 
-const UpdateHomeWorkLink = (props) => {
-  return <CButton type="button" component="a" {...props} />;
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
