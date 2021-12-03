@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import {
-  CButton, CRow, CCol,
-  CDataTable
+  CRow, CCol, CDataTable
 } from '@coreui/react';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';

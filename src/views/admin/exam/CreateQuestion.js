@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 const chosenQuestionNo = [];
 const chosenQuestionData = [];
-var totalDifficulty = 0;
+// var totalDifficulty = 0;
 // totalQuestionNumbers: chosenQuestionData.length,
 const totalData = [{
   totalQuestionNumbers: 2,
@@ -152,13 +152,13 @@ function createQuestionOptionArray(id, type, questionDifficulty, question, quest
   const questionArray = [];
   for (var key in choiceOption) {
     if (choiceOption[key].optionAnswer === 1) {
-      if (key == 0) {
+      if (key === 0) {
         questionArray['questionAnswer'] = "A";
-      } else if (key == 1) {
+      } else if (key === 1) {
         questionArray['questionAnswer'] = "B";
-      } else if (key == 2) {
+      } else if (key === 2) {
         questionArray['questionAnswer'] = "C";
-      } else if (key == 3) {
+      } else if (key === 3) {
         questionArray['questionAnswer'] = "D";
       }
     }
@@ -360,7 +360,8 @@ const CreateQuestion = () => {
             })
             }
             {
-              Questionrows.map((obj, index) => {
+              Questionrows.forEach(obj => {
+                // Questionrows.map((obj, index) => {
                 if (obj.questionType === 1)
                   return (
                     <div key={obj.id}>
@@ -412,6 +413,7 @@ const CreateQuestion = () => {
                       </CRow>
                     </div>
                   );
+                // })
               })
             }
           </CCol>
