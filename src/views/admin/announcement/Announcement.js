@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CButton,
   CDataTable, CModal, CModalHeader,
@@ -6,38 +6,100 @@ import {
   CForm, CFormGroup, CLabel,
   CInput,
 } from '@coreui/react';
+import { toast } from 'react-toastify';
+import { addAnnouncement, deleteAnnouncement, getAnnouncementList } from '../../../api/page/announcement/api';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
+const dataList = []
 
-const usersData = [
-  { id: 0, 公告標題: '系統維護', 公告時間: '110/10/26 20:00 AM' },
-  { id: 1, 公告標題: '比賽新增功能', 公告時間: '110/10/24 13:00 AM' },
-  { id: 2, 公告標題: '作業繳交教學', 公告時間: '110/10/20 09:00 AM' },
-  { id: 3, 公告標題: '忘記密碼怎麼辦', 公告時間: '110/10/16 18:00 AM' },
-]
-
-const fields = [
-  { key: '公告標題', _style: { width: '40%' } },
-  { key: '公告時間', _style: { width: '30%' } },
-  '修改',
-  '刪除',
-  '查看'
-]
-
+function parseData(announcement, setAnnouncementTableData) {
+  for (var i = 0; i < announcement.length; i++) {
+    const tempArray = {};
+    tempArray['title'] = announcement[i].title;
+    tempArray['created_at'] = announcement[i].created_at;
+    dataList.push(tempArray);
+  }
+  console.log(dataList);
+  setAnnouncementTableData(dataList);
+}
 
 
 const Announcement = () => {
-  const [modal, setModal] = useState(false);
-  const toggle = () => {
-    setModal(!modal);
-  }
-  const [modalEdit, setmodalEdit] = useState(false);
-  const toggleEdit = () => {
-    setmodalEdit(!modalEdit);
-  }
+  const [announcement, getAllAnnouncement] = useState([]);
+  const [announcementTitle, setAnnouncementTitle] = useState("");
+  const [announcementContent, setAnnouncementContent] = useState("");
+  const [modalAdd, setModal] = useState(false);
   const [modalDelete, setmodalDelete] = useState(false);
+  const [announcementTableData, setAnnouncementTableData] = useState([]);
+  const toggleAdd = () => {
+    setModal(!modalAdd);
+  }
+  const fields = [
+    { key: 'title', label: '公告標題', _style: { width: '40%' } },
+    { key: 'created_at', label: '公告時間', _style: { width: '30%' } },
+    { key: 'delete', label: '刪除', _style: { width: '15%' } },
+    { key: 'look', label: '查看', _style: { width: '30%' } },
+  ]
+
+  const usersData = [
+    { id: 0, title: '1', created_at: '123' },
+    { id: 1, title: '123', created_at: '456' },
+  ]
+  const submitAdd = () => {
+    const options = {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+    };
+    console.log(localStorage.getItem('token'))
+    addAnnouncement(localStorage.getItem('token'), announcementTitle, announcementContent)
+      .then(() => {
+        toast.info('新增成功', options)
+      })
+      .catch((error) => {
+        toast.info(error.response, options)
+      })
+  }
   const toggleDelete = () => {
     setmodalDelete(!modalDelete);
   }
+  const submitDelete = () => {
+    const options = {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+    };
+    console.log(localStorage.getItem('token'))
+    deleteAnnouncement(localStorage.getItem('token'), announcementTitle, announcementContent)
+      .then(() => {
+        toast.info('新增成功', options)
+      })
+      .catch((error) => {
+        toast.info(error.response, options)
+      })
+  }
+  const showAnnouncementList = () => {
+    getAnnouncementList()
+      .then((rs) => {
+        const allAnnouncement = rs.data.announcements;
+        getAllAnnouncement(allAnnouncement);
+        parseData(announcement, setAnnouncementTableData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    showAnnouncementList();
+  }, []);
+
+  console.log(announcementTableData);
   return (
     <>
       <div><h1 className="card-title mb-0"><strong>公告管理</strong></h1></div>
@@ -45,14 +107,14 @@ const Announcement = () => {
         color="primary"
         shape="spill"
         position="top-right"
-        onClick={toggle}
+        onClick={() => { toggleAdd(); }}
         className="float-right"
       >
         新增公告
       </CButton>
       <CModal
-        show={modal}
-        onClose={toggle}
+        show={modalAdd}
+        onClose={toggleAdd}
       >
         <CModalHeader closeButton><h3>新增公告</h3></CModalHeader>
         <CModalBody>
@@ -61,21 +123,27 @@ const Announcement = () => {
               <CFormGroup>
                 <CLabel htmlFor="nf-className"><h5>公告名稱</h5></CLabel>
                 <CInput
-                  type="className"
-                  id="className"
-                  name="className"
-                  placeholder="請輸入課程名稱"
+                  type="input"
+                  id="announcementTitle"
+                  placeholder="請輸入公告標題"
                   autoComplete="className"
+                  value={announcementTitle}
+                  onChange={(e) => {
+                    setAnnouncementTitle(e.target.value);
+                  }}
                 />
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="nf-teacherName"><h5>公告內容</h5></CLabel>
                 <CInput
-                  type="className"
-                  id="className"
-                  name="className"
+                  type="input"
+                  id="announcementContent"
                   placeholder="請輸入公告之詳細內容"
                   autoComplete="className"
+                  value={announcementContent}
+                  onChange={(e) => {
+                    setAnnouncementContent(e.target.value);
+                  }}
                 />
               </CFormGroup>
             </CForm>
@@ -84,48 +152,9 @@ const Announcement = () => {
         <CModalFooter>
           <CButton
             color="secondary"
-            onClick={toggle}
+            onClick={toggleAdd}
           >Cancel</CButton>
-          <CButton color="primary">新增</CButton>{' '}
-        </CModalFooter>
-      </CModal>
-      <CModal
-        show={modalEdit}
-        onClose={toggleEdit}
-      >
-        <CModalHeader closeButton><h3>修改公告資訊</h3></CModalHeader>
-        <CModalBody>
-          <CCol sm="12">
-            <CForm action="" method="post">
-              <CFormGroup>
-                <CLabel htmlFor="nf-courseNameEdit"><h5>公告名稱</h5></CLabel>
-                <CInput
-                  type="courseNameEdit"
-                  id="courseNameEdit"
-                  name="courseNameEdit"
-                  placeholder="程式設計(上)"
-                // autoComplete="courseName"
-                />
-              </CFormGroup>
-              <CFormGroup>
-              <CLabel htmlFor="nf-teacherName"><h5>公告內容</h5></CLabel>
-                <CInput
-                  type="className"
-                  id="className"
-                  name="className"
-                  placeholder="請輸入公告之詳細內容"
-                  autoComplete="className"
-                />
-              </CFormGroup>
-            </CForm>
-          </CCol>
-        </CModalBody>
-        <CModalFooter>
-          <CButton
-            color="secondary"
-            onClick={toggleEdit}
-          >Cancel</CButton>
-          <CButton color="info">儲存</CButton>{' '}
+          <CButton color="primary" onClick={() => { submitAdd(); toggleAdd(); }}>新增</CButton>
         </CModalFooter>
       </CModal>
       <CModal
@@ -147,35 +176,18 @@ const Announcement = () => {
             color="secondary"
             onClick={toggleDelete}
           >Cancel</CButton>
-          <CButton color="danger">確認刪除</CButton>{' '}
+          <CButton color="danger" onClick={() => { submitDelete(); toggleDelete(); }}>確認刪除</CButton>
         </CModalFooter>
       </CModal>
       <CDataTable
-        items={usersData}
+        items={dataList}
         fields={fields}
         tableFilter
-        // itemsPerPageSelect
         itemsPerPage={10}
         hover
         pagination
         scopedSlots={{
-          // 彈跳視窗 (利用 form 送給後端)
-          '修改':
-            () => {
-              return (
-                <td className="py-2">
-                  <CButton
-                    color="info"
-                    shape="spill"
-                    size="sm"
-                    onClick={toggleEdit}
-                  >
-                    修改
-                  </CButton>
-                </td>
-              )
-            },
-          '刪除':
+          'delete':
             () => {
               return (
                 <td className="py-2">
@@ -190,7 +202,7 @@ const Announcement = () => {
                 </td>
               )
             },
-          '查看':
+          'look':
             () => {
               return (
                 <td className="py-2">
@@ -198,7 +210,6 @@ const Announcement = () => {
                     color="success"
                     shape="spill"
                     size="sm"
-                    // onClick={goToHomeworkList}
                     href={`#announcement/announcementcontent`}
                   >
                     查看
