@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+// import JSONbig from 'json-bigint';
 import {
   CButton, CCreateElement, CSidebarNavItem,
   CDataTable, CModal, CModalHeader,
@@ -7,6 +8,9 @@ import {
   CForm, CFormGroup, CLabel,
   CInput, CSelect,
 } from '@coreui/react';
+import { toast } from 'react-toastify';
+import getCourseList from '../../../api/page/course/api';
+import addQuestion from '../../../api/page/homework/api';
 
 const CourseSideBar = [
   {
@@ -45,8 +49,8 @@ const fields = [
   { key: '授課老師', _style: { width: '25%' } },
   '刪除',
   '修改',
-  { key: '查看學生名單', _style: { width: '12%'} },
-  { key: '進入作業/測驗', _style: { width: '12%'} }
+  { key: '查看學生名單', _style: { width: '12%' } },
+  { key: '進入作業/測驗', _style: { width: '12%' } }
 ]
 
 
@@ -83,6 +87,52 @@ const CourseList = () => {
   const [modalDelete, setmodalDelete] = useState(false);
   const toggleDelete = () => {
     setmodalDelete(!modalDelete);
+  }
+  const [allCourse, setAllCourse] = useState([]);
+
+  const options = {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+  };
+  const showCourseList = () => {
+    if (localStorage.getItem('token') != null) {
+      const token = localStorage.getItem('token');
+      console.log(token);
+      // getCourseList(token)
+      //   .then((rs) => {
+      //     var data = JSONbig.parse(rs.data);
+      //     console.log(data.classes[0].toString())
+      //     const tempClassID = data.classes;
+      //     const classData = [];
+      //     getClassIndiData(token, tempClassID, classData);
+      //   })
+      //   .catch((err) => {
+      //     if (err.response) {
+      //       toast.error(err.response.data.message, options);
+      //     }
+      //   })
+    }
+  }
+  useEffect(() => {
+    showCourseList();
+  }, []);
+  function getClassIndiData(token, tempClassID, classData) {
+    let temp = null;
+    temp = tempClassID.pop();
+    getCourseInfo(token, temp.toString())
+      .then((rs) => {
+        rs.data.class_id = temp.toString();
+        classData.push(rs.data);
+        if (tempClassID.length > 0) {
+          getClassIndiData(token, tempClassID, classData);
+        } else {
+          setAllCourse(classData);
+        }
+      })
   }
   return (
     <>
@@ -213,20 +263,20 @@ const CourseList = () => {
         scopedSlots={{
           // 彈跳視窗 (利用 form 送給後端)
           '刪除':
-          () => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="danger"
-                  shape="spill"
-                  size="sm"
-                  onClick={toggleDelete}
-                >
-                  刪除
-                </CButton>
-              </td>
-            )
-          },
+            () => {
+              return (
+                <td className="py-2">
+                  <CButton
+                    color="danger"
+                    shape="spill"
+                    size="sm"
+                    onClick={toggleDelete}
+                  >
+                    刪除
+                  </CButton>
+                </td>
+              )
+            },
           '修改':
             () => {
               return (
@@ -242,7 +292,7 @@ const CourseList = () => {
                 </td>
               )
             },
-            '查看學生名單':
+          '查看學生名單':
             () => {
               return (
                 <td className="py-2">

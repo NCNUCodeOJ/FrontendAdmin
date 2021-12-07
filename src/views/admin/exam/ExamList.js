@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   CButton, CDataTable, CModal, CModalHeader,
   CModalBody, CModalFooter, CCol,
-  CForm, CFormGroup, CLabel,
+  CForm, CFormGroup, CLabel
 } from '@coreui/react'
 
 const usersData = [
@@ -14,7 +14,7 @@ const usersData = [
   { id: 5, 測驗名稱: '走馬炮', 剩餘時間: '5 day' },
   { id: 6, 測驗名稱: '閏年判斷計算機', 剩餘時間: '16 day' },
   { id: 7, 測驗名稱: '迷宮遊戲', 剩餘時間: '21 day' },
-]
+];
 
 const fields = [
   { key: '測驗名稱', _style: { width: '30%' } },
@@ -22,7 +22,7 @@ const fields = [
   '刪除',
   '修改',
   { key: '查看', _style: { width: '10%' } },
-]
+];
 
 const ExamInfo = () => {
   const [modalEdit, setmodalEdit] = useState(false);

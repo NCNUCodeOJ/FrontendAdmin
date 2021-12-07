@@ -5,10 +5,24 @@ import {
   TheFooter,
   TheHeader
 } from './index'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TheLayout = () => {
 
   return (
+    <>
+    <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     <div className="c-app c-default-layout">
       <TheSidebar/>
       <div className="c-wrapper">
@@ -19,6 +33,7 @@ const TheLayout = () => {
         <TheFooter/>
       </div>
     </div>
+    </>
   )
 }
 

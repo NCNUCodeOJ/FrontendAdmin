@@ -2,14 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import {
   CContainer, CRow, CCol,
-  CInput, CTextarea
+  CInput, CTextarea, CButton
 } from '@coreui/react';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { Redirect } from 'react-router-dom';
 import {
-  Typography, TextField,
-  Button, Grid
+  Typography, TextField, Grid
 } from '@material-ui/core/';
 
 const HomeWorkItem = () => {
@@ -281,18 +280,12 @@ const CreateHomeWork = () => {
           </CCol>
         </CRow>
 
-        <Grid
-          container spacing={1} justify="center" className='my-2'>
-          <Grid item xs={6} md={4}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              提交
-            </Button>
-          </Grid>
-        </Grid>
+        <CCol xs="3" sm="3" md="3" className='my-3 mx-auto d-flex flex-column'>
+          <CButton type="button" component="a" color="primary"
+            className="my-auto float-right">
+            提交
+          </CButton>
+        </CCol>
       </CContainer>
     </>
   )
