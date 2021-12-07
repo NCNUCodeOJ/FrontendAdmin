@@ -17,7 +17,6 @@ import {
 import {
   FileCopyOutlined
 } from '@material-ui/icons/';
-import Editor from "@monaco-editor/react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -272,14 +271,14 @@ const HomeWorkInfo = () => {
         </FormControl>
       </CRow>
       <CRow xs={10} sm={10} md={10} className="my-3 mx-5">
-        <Editor
+        {/* <Editor
           height="60vh"
           theme="vs-dark"
           path={allLanguageName[languageState] ? allLanguageName[languageState].name : ''}
           language={allLanguageName[languageState] ? allLanguageName[languageState].language : ''}
           value={allLanguageName[languageState] ? allLanguageName[languageState].value : ''}
           onChange={handleEditorChange}
-        />
+        /> */}
       </CRow>
 
       <CRow xs={10} sm={10} md={10} className="mx-3 my-3">

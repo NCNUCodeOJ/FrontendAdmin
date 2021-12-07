@@ -5,6 +5,7 @@ import {
   CForm, CFormGroup, CLabel,
   CInput
 } from '@coreui/react'
+import { useHistory } from 'react-router-dom';
 
 
 const usersData = [
@@ -26,7 +27,9 @@ const fields = [
   { key: '查看', _style: { width: '10%' } },
 ];
 
-const HomeWorkList = () => {
+const HomeWorkList = ({ match }) => {
+  const classID = match.params.id;
+  console.log(classID);
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -39,6 +42,8 @@ const HomeWorkList = () => {
   const toggleDelete = () => {
     setmodalDelete(!modalDelete);
   }
+  const history = useHistory()
+
   return (
     <>
       <div><h1><strong>作業管理</strong></h1></div>
@@ -190,7 +195,7 @@ const HomeWorkList = () => {
                     color="success"
                     shape="spill"
                     size="sm"
-                    href={`#course/homeworkstudentlist`}
+                    onClick={() => history.push(`/course/homeworkstudentlist/${classID}`)}
                   >
                     查看
                   </CButton>

@@ -15,4 +15,16 @@ const getCourseList = (userToken) => {
   return authAxios.get(`${serverURL}/v1/class`, {transformResponse: [data => data]})
 };
 
-export { getCourseList };
+const getCourseInfo = (userToken, classID) => {
+  const authAxios = axios.create({
+    baseURL: serverURL,
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    },
+  })
+  return authAxios.get(`${serverURL}/v1/class/${classID}`, {transformResponse: [data => data]})
+};
+
+export {
+  getCourseList, getCourseInfo
+};

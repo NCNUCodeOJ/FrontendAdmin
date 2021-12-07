@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { useSelector } from 'react-redux';
 import {
   CContainer, CRow, CCol,
@@ -12,9 +12,36 @@ import {
 } from '@material-ui/core/';
 
 const HomeWorkItem = () => {
+
+
   return (
     <>
-      <div>
+
+    </>
+  );
+}
+
+const CreateHomeWork = () => {
+  const isLogin = useSelector(state => state.isLogin);
+  const [HWTitle, setHWTitle] = useState("");
+  const [HWDiscription, setHWDiscription] = useState("");
+  const [HWDifficulty, setHWDifficulty] = useState("");
+  const [HWOpenTime, setHWOpenTime] = useState("");
+  const [HWCloseTime, setHWCloseTime] = useState("");
+  const [HWInputDiscription, setHWInputDiscription] = useState("");
+  const [HWOutputDiscription, setHWOutputDiscription] = useState("");
+  const [HWInput, setHWInput] = useState("");
+  const [HWOutput, setHWOutput] = useState("");
+  if (!isLogin) {
+    return (
+      <Redirect to="/" />
+    )
+  }
+
+  return (
+    <>
+      <CContainer className="px-2">
+        {/* <HomeWorkItem /> */}
         <CRow sm="12" md="10" className="mx-auto">
           <CCol sm="7" md="8">
             <h1 className="font-weight-bold card-title mb-0">
@@ -36,7 +63,10 @@ const HomeWorkItem = () => {
                 'maxLength': 1
               }}
               placeholder="請輸入作業標題"
-              type='text' />
+              type='text'
+              onChange={(e) => {
+                setHWTitle(e.target.value);
+              }} />
           </CCol>
         </CRow>
         <CRow sm="12" md="10" className="my-2">
@@ -51,7 +81,10 @@ const HomeWorkItem = () => {
                 'maxLength': 1
               }}
               placeholder="請輸入作業說明"
-              type='text' />
+              type='text'
+              onChange={(e) => {
+                setHWDiscription(e.target.value);
+              }} />
           </CCol>
         </CRow>
         <CRow sm="12" md="10" className="my-2">
@@ -61,6 +94,9 @@ const HomeWorkItem = () => {
               name="homeworkDifficulty"
               precision={1}
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
+              onChange={(e) => {
+                setHWDifficulty(e.target.value);
+              }}
             />
           </CCol>
         </CRow>
@@ -77,7 +113,10 @@ const HomeWorkItem = () => {
                     'aria-label': 'naked',
                     'maxLength': 1
                   }}
-                  type='datetime-local' />
+                  type='datetime-local'
+                  onChange={(e) => {
+                    setHWOpenTime(e.target.value);
+                  }} />
               </CCol>
             </CRow>
           </CCol>
@@ -93,31 +132,15 @@ const HomeWorkItem = () => {
                     'aria-label': 'naked',
                     'maxLength': 1
                   }}
-                  type='datetime-local' />
+                  type='datetime-local'
+                  onChange={(e) => {
+                    setHWCloseTime(e.target.value);
+                  }} />
               </CCol>
             </CRow>
           </CCol>
         </CRow>
-        <CRow sm="12" md="12" className="my-2">
-          <CCol sm="12" md="12">
-            <CRow>
-              <h4 className="my-auto pr-1 font-weight-bold">評分標準:</h4>
-              <CCol sm="10" md="10">
-                <CInput
-                  custom-size="lg"
-                  id="homeworkGradingStandard"
-                  alignitems="center"
-                  textalign="center"
-                  inputprops={{
-                    'aria-label': 'naked',
-                    'maxLength': 1
-                  }}
-                  placeholder="請輸入評分標準"
-                  type='text' />
-              </CCol>
-            </CRow>
-          </CCol>
-        </CRow>
+
         <CRow sm="12" md="12" className="my-2">
           <CCol sm="12" md="12">
             <CRow>
@@ -133,7 +156,10 @@ const HomeWorkItem = () => {
                     'maxLength': 1
                   }}
                   placeholder="輸入描述"
-                  type='text' />
+                  type='text'
+                  onChange={(e) => {
+                    setHWInputDiscription(e.target.value);
+                  }} />
               </CCol>
             </CRow>
           </CCol>
@@ -153,30 +179,15 @@ const HomeWorkItem = () => {
                     'maxLength': 1
                   }}
                   placeholder="輸出描述"
-                  type='text' />
+                  type='text'
+                  onChange={(e) => {
+                    setHWOutputDiscription(e.target.value);
+                  }} />
               </CCol>
             </CRow>
           </CCol>
         </CRow>
 
-      </div>
-    </>
-  );
-}
-
-const CreateHomeWork = () => {
-  const isLogin = useSelector(state => state.isLogin);
-
-  if (!isLogin) {
-    return (
-      <Redirect to="/" />
-    )
-  }
-
-  return (
-    <>
-      <CContainer className="px-2">
-        <HomeWorkItem />
         <Typography variant="h6" >
           測資1
         </Typography>
@@ -201,23 +212,11 @@ const CreateHomeWork = () => {
               variant="outlined"
               placeholder='請輸入測資'
               fullWidth
+              onChange={(e) => {
+                setHWOutput(e.target.value);
+              }}
             />
           </CCol>
-          {/* </CRow> */}
-          {/* <CCol xs="1" sm="1" md="1">
-            <CButton
-              variant="outline"
-              color="dark"
-              type="button"
-              component="a"
-              onClick={cloneQuestionTopic}
-              className="btn-block">
-              <CIcon name="cil-plus" className="px-0" custom-size="md" />
-            </CButton>
-          </CCol>
-          <CCol xs="1" sm="1" md="1" className="pl-0">
-            <Trash />
-          </CCol> */}
         </CRow>
 
         <Typography variant="h6" >
@@ -233,6 +232,9 @@ const CreateHomeWork = () => {
               variant="outlined"
               placeholder='請輸入測資'
               fullWidth
+              onChange={(e) => {
+                setHWInput(e.target.value);
+              }}
             />
           </CCol>
           <CCol sm="12" md="6">
@@ -279,6 +281,10 @@ const CreateHomeWork = () => {
             </CRow>
           </CCol>
         </CRow>
+        <CRow sm="12" md="10" className="my-2">
+          <h4 className="my-auto font-weight-bold">上傳Test Case(Zip壓縮檔):</h4>
+        </CRow>
+        <input type="file" class="form-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"></input>
 
         <CCol xs="3" sm="3" md="3" className='my-3 mx-auto d-flex flex-column'>
           <CButton type="button" component="a" color="primary"
