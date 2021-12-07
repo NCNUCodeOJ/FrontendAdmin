@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CCard,
   CCardBody,
@@ -6,54 +6,83 @@ import {
   CCol,
   CRow,
 } from '@coreui/react'
+import { getAnnouncementList } from 'src/api/page/announcement/api';
+import JSONbig from 'json-bigint';
 
-const AnnouncementContent = () => {
+const Item = (props) => {
+  const x = props.item;
   return (
     <>
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader className="contestIntroArea">
+      {(() => {
+        if (props.currentID == x.announcement_id.toString()) {
+          console.log(x.announcement_id.toString());
+          return (
+            <>
               <CRow>
-                <CCol sm="5">
-                  <div>
-                    <h4>
-                      <strong>公告內容：系統維護</strong>
-                    </h4>
-                  </div>
-                </CCol>
                 <CCol>
-                  {/* <CButton
-                    color="primary"
-                    // shape="spill"
-                    position="top-right"
-                    // onClick={toggle}
-                    className="float-right"
-                  >
-                    修改簡介
-                  </CButton> */}
+                  <CCard>
+                    <CCardHeader className="contestIntroArea">
+                      <CRow>
+                        <CCol sm="5">
+                          <div>
+                            <h4>
+                              <strong>{x.title}</strong>
+                            </h4>
+                          </div>
+                        </CCol>
+                      </CRow>
+                    </CCardHeader>
+                    <CCardBody>
+                      <CRow>
+                        <CCol xs="12">
+                          <CRow>
+                            <CCol>
+                              <h5>
+                                {x.content}
+                              </h5>
+                            </CCol>
+                          </CRow>
+                        </CCol>
+                      </CRow>
+                      <br />
+                    </CCardBody>
+                  </CCard>
                 </CCol>
               </CRow>
-            </CCardHeader>
-            <CCardBody>
-              <CRow>
-                <CCol xs="12">
-                  <CRow>
-                    <CCol>
-                      <h5>
-                        本系統因辦理例行性系統維護將於：
-                        110年12月13日(一) 23：30～110年12月18日(二) 00：30
-                        暫停所有服務，如造成您的不便，敬請見諒。
-                      </h5>
-                    </CCol>
-                  </CRow>
-                </CCol>
-              </CRow>
-              <br />
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+            </>
+          );
+        }
+      })()}
+    </>
+  );
+}
+const AnnouncementContent = ({ match }) => {
+  const currentID = match.params.id;
+  const [announcement, getAllAnnouncement] = useState([]);
+  const showAnnouncementContent = () => {
+    getAnnouncementList()
+      .then((rs) => {
+        const data = JSONbig.parse(rs.data)
+        const allAnnouncement = data.announcements;
+        console.log(allAnnouncement)
+        getAllAnnouncement(allAnnouncement);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      })
+  };
+  useEffect(() => {
+    showAnnouncementContent();
+  }, []);
+  return (
+    <>
+      <div>
+        {
+          announcement.map((x) => (
+            <Item key={x.announcement_id.toString()} item={x} currentID={currentID} />
+          ))
+        }
+      </div>
     </>
   )
 }
