@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import JSONbig from 'json-bigint';
 import {
   CButton, CCreateElement, CSidebarNavItem,
   CDataTable, CModal, CModalHeader,
@@ -7,6 +8,9 @@ import {
   CForm, CFormGroup, CLabel,
   CInput, CSelect,
 } from '@coreui/react';
+import { toast } from 'react-toastify';
+import { getCourseList, getCourseInfo } from '../../../api/page/course/api';
+import { getUserInfoById } from '../../../api/page/user/api';
 
 const CourseSideBar = [
   {
@@ -30,23 +34,23 @@ const CourseSideBar = [
 ]
 
 const usersData = [
-  { id: 0, 課程名稱: '程式設計(上)', 授課老師: '俞旭昇' },
-  { id: 1, 課程名稱: '程式設計(下)', 授課老師: '俞旭昇' },
-  { id: 2, 課程名稱: '軟體工程(上)', 授課老師: '陳建宏' },
-  { id: 3, 課程名稱: '網頁設計(上)', 授課老師: '陳彥錚' },
-  { id: 4, 課程名稱: '網頁設計(下)', 授課老師: '陳彥錚' },
-  { id: 5, 課程名稱: '軟體工程(下)', 授課老師: '陳建宏' },
-  { id: 6, 課程名稱: '1091 程式設計', 授課老師: '俞旭昇' },
-  { id: 7, 課程名稱: '1092 程式設計', 授課老師: '俞旭昇' },
+  { id: 0, class_name: '程式設計(上)', teacher: '俞旭昇' },
+  { id: 1, class_name: '程式設計(下)', teacher: '俞旭昇' },
+  { id: 2, class_name: '軟體工程(上)', teacher: '陳建宏' },
+  { id: 3, class_name: '網頁設計(上)', teacher: '陳彥錚' },
+  { id: 4, class_name: '網頁設計(下)', teacher: '陳彥錚' },
+  { id: 5, class_name: '軟體工程(下)', teacher: '陳建宏' },
+  { id: 6, class_name: '1091 程式設計', teacher: '俞旭昇' },
+  { id: 7, class_name: '1092 程式設計', teacher: '俞旭昇' },
 ]
 
 const fields = [
-  { key: '課程名稱', _style: { width: '30%' } },
-  { key: '授課老師', _style: { width: '25%' } },
+  { key: 'class_name', label: '課程名稱', _style: { width: '30%' } },
+  { key: 'teacher', label: '授課老師', _style: { width: '25%' } },
   '刪除',
   '修改',
-  { key: '查看學生名單', _style: { width: '12%'} },
-  { key: '進入作業/測驗', _style: { width: '12%'} }
+  { key: 'studentList', label: '查看學生名單', _style: { width: '12%' } },
+  { key: 'goToHW', label: '進入作業/測驗', _style: { width: '12%' } }
 ]
 
 
@@ -77,13 +81,81 @@ const CourseList = () => {
     setModal(!modal);
   }
   const [modalEdit, setmodalEdit] = useState(false);
-  const toggleEdit = () => {
+  const toggleEdit = (id) => {
     setmodalEdit(!modalEdit);
+    console.log(id.toString());
   }
   const [modalDelete, setmodalDelete] = useState(false);
   const toggleDelete = () => {
     setmodalDelete(!modalDelete);
   }
+  const [allCourse, setAllCourse] = useState([]);
+  const [allTeacherID, setAllTeacherID] = useState([]);
+  const [allTeacherName, setAllTeacherName] = useState([]);
+
+  const options = {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+  };
+  const showCourseList = () => {
+    if (localStorage.getItem('token') != null) {
+      const token = localStorage.getItem('token');
+      console.log(token);
+      getCourseList(token)
+        .then((rs) => {
+          var data = JSONbig.parse(rs.data);
+          const tempClassID = data.classes;
+          const classData = [];
+          const teacherID = new Set;
+          getClassIndiData(token, tempClassID, classData, teacherID);
+        })
+        .catch((err) => {
+          if (err.response) {
+            toast.error(err.response.data.message, options);
+          }
+        })
+    }
+  }
+  useEffect(() => {
+    showCourseList();
+  }, []);
+  function getClassIndiData(token, tempClassID, classData, teacherID) {
+    let temp = null;
+    temp = tempClassID.pop();
+    getCourseInfo(token, temp.toString())
+      .then((rs) => {
+        var classInfo = JSONbig.parse(rs.data);
+        classInfo.class_id = classInfo.class_id.toString();
+        classData.push(classInfo);
+        teacherID.add(classInfo.teacher.toString());
+        if (tempClassID.length > 0) {
+          getClassIndiData(token, tempClassID, classData, teacherID);
+        } else {
+          const teacherIDJSON = {};
+          teacherIDJSON["user_id"] = Array.from(teacherID);
+          getUserInfo(token, teacherIDJSON);
+          setAllCourse(classData);
+          setAllTeacherID(teacherIDJSON);
+        }
+      })
+  }
+
+  function getUserInfo(token, allTeacherID) {
+    getUserInfoById(token, allTeacherID)
+      .then((rs) => {
+        setAllTeacherName(rs.data);
+      })
+      .catch((er) => {
+        console.log(er.response.data.message);
+      }
+      )
+  }
+  console.log(allCourse);
+  const classID='717021008802840578';
   return (
     <>
       <div><h1><strong>國立暨南國際大學-課程管理</strong></h1></div>
@@ -203,7 +275,7 @@ const CourseList = () => {
         </CModalFooter>
       </CModal>
       <CDataTable
-        items={usersData}
+        items={allCourse}
         fields={fields}
         tableFilter
         // itemsPerPageSelect
@@ -213,36 +285,36 @@ const CourseList = () => {
         scopedSlots={{
           // 彈跳視窗 (利用 form 送給後端)
           '刪除':
-          () => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="danger"
-                  shape="spill"
-                  size="sm"
-                  onClick={toggleDelete}
-                >
-                  刪除
-                </CButton>
-              </td>
-            )
-          },
+            (item) => {
+              return (
+                <td className="py-2">
+                  <CButton
+                    color="danger"
+                    shape="spill"
+                    size="sm"
+                    onClick={() => toggleDelete(item.class_id)}
+                  >
+                    刪除
+                  </CButton>
+                </td>
+              )
+            },
           '修改':
-            () => {
+            (item) => {
               return (
                 <td className="py-2">
                   <CButton
                     color="info"
                     shape="spill"
                     size="sm"
-                    onClick={toggleEdit}
+                    onClick={() => toggleEdit(item.class_id)}
                   >
                     修改
                   </CButton>
                 </td>
               )
             },
-            '查看學生名單':
+          'studentList':
             () => {
               return (
                 <td className="py-2">
@@ -250,14 +322,14 @@ const CourseList = () => {
                     color="primary"
                     shape="spill"
                     size="sm"
-                    href={`#course/studentlist`}
+                    href={`#course/studentlist/${classID}`}
                   >
                     查看學生名單
                   </CButton>
                 </td>
               )
             },
-          '進入作業/測驗':
+          'goToHW':
             () => {
               return (
                 <td className="py-2">
@@ -266,13 +338,13 @@ const CourseList = () => {
                     shape="spill"
                     size="sm"
                     onClick={goToHomeworkList}
-                    href={`#course/homeworklist`}
+                    href={`#course/homeworklist/${classID}`}
                   >
                     進入作業/測驗
                   </CButton>
                 </td>
               )
-            },
+            }
         }}
       />
     </>

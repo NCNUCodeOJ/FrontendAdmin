@@ -252,7 +252,7 @@ const CreateExam = () => {
 
         <CCol xs="3" sm="3" md="3" className='my-3 mx-auto d-flex flex-column'>
           <CButton type="button" component="a" color="primary"
-            className="my-auto float-right" href={`#course/createquestion`}>
+            className="my-auto float-right">
             提交
           </CButton>
         </CCol>
