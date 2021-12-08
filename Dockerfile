@@ -6,6 +6,6 @@ RUN cd /src && npm install && npm run build
 # final stage
 FROM halverneus/static-file-server:latest
 WORKDIR /web
-RUN mkdir -p /web/admin
+RUN mkdir /web/admin
 COPY --from=build-env /src/build /web/admin
 EXPOSE 8080
