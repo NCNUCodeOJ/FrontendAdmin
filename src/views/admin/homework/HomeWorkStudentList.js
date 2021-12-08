@@ -49,7 +49,9 @@ const fields = [
 
 
 
-const HomeWorkStudentList = () => {
+const HomeWorkStudentList = ({ match }) => {
+  const classID = match.params.id;
+  console.log(classID);
   const dispatch = useDispatch();
   const backToCourseList = () => {
     dispatch({ type: 'set', customNavBar: null });
