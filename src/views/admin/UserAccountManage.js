@@ -19,7 +19,6 @@ const fields = [
   { key: '帳號', _style: { width: '20%' } },
   { key: '使用者名稱', _style: { width: '20%' } },
   { key: '修改', _style: { width: '10%' } },
-  { key: '停權', _style: { width: '3%' } },
 ]
 
 const teacherAccount = [
@@ -85,28 +84,6 @@ const UserAccountManage = () => {
           <CButton color="info">儲存</CButton>{' '}
         </CModalFooter>
       </CModal>
-      <CModal
-        show={modalDelete}
-        onClose={toggleDelete}
-      >
-        <CModalHeader closeButton><h3>停權</h3></CModalHeader>
-        <CModalBody>
-          <CCol sm="12">
-            <CForm action="" method="post">
-              <CFormGroup>
-                <CLabel htmlFor="nf-className"><h5>確認要停掉該位老師/學生的權限？</h5></CLabel>
-              </CFormGroup>
-            </CForm>
-          </CCol>
-        </CModalBody>
-        <CModalFooter>
-          <CButton
-            color="secondary"
-            onClick={toggleDelete}
-          >取消</CButton>
-          <CButton color="danger">確認停權</CButton>{' '}
-        </CModalFooter>
-      </CModal>
       <CDataTable
         items={usersData}
         fields={fields}
@@ -128,21 +105,6 @@ const UserAccountManage = () => {
                     onClick={toggleEdit}
                   >
                     修改
-                  </CButton>
-                </td>
-              )
-            },
-          '停權':
-            () => {
-              return (
-                <td className="py-2">
-                  <CButton
-                    color="danger"
-                    shape="spill"
-                    size="sm"
-                    onClick={toggleDelete}
-                  >
-                    停權
                   </CButton>
                 </td>
               )
@@ -172,21 +134,6 @@ const UserAccountManage = () => {
                     marginHeight="10"
                   >
                     修改
-                  </CButton>
-                </td>
-              )
-            },
-          '停權':
-            () => {
-              return (
-                <td className="py-2">
-                  <CButton
-                    color="danger"
-                    shape="spill"
-                    size="sm"
-                    onClick={toggleDelete}
-                  >
-                    停權
                   </CButton>
                 </td>
               )
