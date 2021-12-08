@@ -109,7 +109,7 @@ const HomeWorkStudentList = ({ match }) => {
         color="danger"
         shape="spill"
         position="top-right"
-        onClick={toggle}
+        href='http://moss.stanford.edu/results/3/2941481227494'
         className="float-right"
       >
         抄襲比對

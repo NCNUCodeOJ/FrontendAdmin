@@ -203,7 +203,7 @@ const CreateExam = () => {
                           'aria-label': 'naked',
                           'maxLength': 1
                         }}
-                        placeholder="60"
+                        placeholder="100"
                         type='text' />
                     </CCol>
                   </CRow>

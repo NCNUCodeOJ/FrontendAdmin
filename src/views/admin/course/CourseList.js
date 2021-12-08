@@ -33,16 +33,16 @@ const CourseSideBar = [
   }
 ]
 
-// const usersData = [
-//   { id: 0, class_name: '程式設計(上)', teacher: '俞旭昇' },
-//   { id: 1, class_name: '程式設計(下)', teacher: '俞旭昇' },
-//   { id: 2, class_name: '軟體工程(上)', teacher: '陳建宏' },
-//   { id: 3, class_name: '網頁設計(上)', teacher: '陳彥錚' },
-//   { id: 4, class_name: '網頁設計(下)', teacher: '陳彥錚' },
-//   { id: 5, class_name: '軟體工程(下)', teacher: '陳建宏' },
-//   { id: 6, class_name: '1091 程式設計', teacher: '俞旭昇' },
-//   { id: 7, class_name: '1092 程式設計', teacher: '俞旭昇' },
-// ]
+const usersData = [
+  { id: 0, class_name: '程式設計(上)', teacher: '俞旭昇' },
+  { id: 1, class_name: '程式設計(下)', teacher: '俞旭昇' },
+  { id: 2, class_name: '軟體工程(上)', teacher: '陳建宏' },
+  { id: 3, class_name: '網頁設計(上)', teacher: '陳彥錚' },
+  { id: 4, class_name: '網頁設計(下)', teacher: '陳彥錚' },
+  { id: 5, class_name: '軟體工程(下)', teacher: '陳建宏' },
+  { id: 6, class_name: '1091 程式設計', teacher: '俞旭昇' },
+  { id: 7, class_name: '1092 程式設計', teacher: '俞旭昇' },
+]
 
 const fields = [
   { key: 'class_name', label: '課程名稱', _style: { width: '30%' } },
@@ -184,6 +184,8 @@ const CourseList = () => {
       }
       )
   }
+  console.log(allCourse);
+
   const classID='717021008802840578';
   return (
     <>

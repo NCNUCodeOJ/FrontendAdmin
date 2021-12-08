@@ -11,16 +11,8 @@ import {
 import { toast } from 'react-toastify';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-const chosenQuestionNo = [];
-const chosenQuestionData = [];
-// var totalDifficulty = 0;
-// totalQuestionNumbers: chosenQuestionData.length,
-const totalData = [{
-  totalQuestionNumbers: 2,
-  averageQuestionDifficulty: (2 / 2),
-  // 暫定
-  totalQuestionScore: 100
-}];
+import addQuestion from '../../../api/page/homework/api';
+import ErrorMsg from '../pkg/ErrorMsg';
 
 const allQuestion =
   [
@@ -134,23 +126,11 @@ function createQuestionOptionArray(type, questionDifficulty, question, questionS
       questionArray['option' + TFKey] = choiceOption[TFKey].content;
       questionArray['id'] = choiceOption[TFKey].question_id;
     }
-  }
-  console.log(chosenQuestionData.length);
-
-}
-
-function createQuestionOptionArray(id, type, questionDifficulty, question, questionSource, choiceOption) {
-  const questionArray = [];
-  for (var key in choiceOption) {
-    if (choiceOption[key].optionAnswer === 1) {
-      if (key === 0) {
-        questionArray['questionAnswer'] = "A";
-      } else if (key === 1) {
-        questionArray['questionAnswer'] = "B";
-      } else if (key === 2) {
-        questionArray['questionAnswer'] = "C";
-      } else if (key === 3) {
-        questionArray['questionAnswer'] = "D";
+  } else if (type === 3) {
+    questionTypeContent = '問答題';
+    for (var SAKey in choiceOption) {
+      if (choiceOption[SAKey].answer) {
+        questionArray['questionAnswer'] = choiceOption[SAKey].content;
       }
       questionArray['option' + SAKey] = choiceOption[SAKey].content;
       questionArray['id'] = choiceOption[SAKey].question_id;
@@ -954,87 +934,7 @@ const CreateQuestion = () => {
         </CRow>
 
         <CRow xs="12" sm="12" md="12" className="my-2">
-          <CCol xs="12" sm="12" md="6">
-            {Questionrows.map((obj, index) => {
-              return (
-                <CRow sm="12" md="12">
-                  <CCol xs="12" sm="12" md="12" className="mb-2">
-                    <h4 className="d-inline align-middle">題目預覽</h4>
-                    <h5 className="d-inline align-middle"> 難易度</h5>
-                    <Rating
-                      className="align-middle"
-                      name="examDifficulty"
-                      defaultValue={0}
-                      precision={1}
-                      emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                      value={obj.questionDifficulty}
-                      readOnly
-                    />
-                  </CCol>
-                </CRow>
-              )
-            })
-            }
-            {
-              Questionrows.forEach(obj => {
-                // Questionrows.map((obj, index) => {
-                if (obj.questionType === 1)
-                  return (
-                    <div key={obj.id}>
-                      <CRow xs="12" sm="12" md="12" className="mx-0 my-1 d-flex p-2 align-items-center border border-secondary bg-white" id="createQuestionTextArea">
-                        <CCol className="px-1">
-                          {obj.question}
-                          <br />
-                          <p className='text-black-50 my-0'>
-                            [{obj.questionSource}]
-                          </p>
-                          (A) {obj.option0}
-                          (B) {obj.option1}
-                          (C) {obj.option2}
-                          (D) {obj.option3}
-                        </CCol>
-                      </CRow>
-                      <CRow xs="12" sm="12" md="12" className="mx-0 my-0 d-flex p-2 align-items-center border border-secondary bg-secondary">
-                        <CCol className="px-1">
-                          解答: {obj.questionAnswer}
-                        </CCol>
-                      </CRow>
-                    </div>
-                  );
-                else if (obj.questionType === 2)
-                  return (
-                    <div key={obj.id}>
-                      <CRow xs="12" sm="12" md="12" className="mx-0 my-1 d-flex p-2 align-items-center border border-secondary bg-white" id="createQuestionTextArea">
-                        <CCol className="px-1">
-                          {obj.question}
-                          <br />
-                          <p className='text-black-50'>
-                            [{obj.questionSource}]
-                          </p>
-                        </CCol>
-                      </CRow>
-                    </div>
-                  );
-                else if (obj.questionType === 3)
-                  return (
-                    <div key={obj.id}>
-                      <CRow xs="12" sm="12" md="12" className="mx-0 my-1 d-flex p-2 align-items-center border border-secondary bg-white" id="createQuestionTextArea">
-                        <CCol className="px-1">
-                          {obj.question}
-                          <br />
-                          <p className='text-black-50'>
-                            [{obj.questionSource}]
-                          </p>
-                        </CCol>
-                      </CRow>
-                    </div>
-                  );
-                // })
-              })
-            }
-          </CCol>
-
-          <CCol xs="12" sm="12" md="6">
+          <CCol xs="12" sm="12" md="12">
             <CRow sm="12" md="12">
               <CCol xs="12" sm="12" md="12" className="mb-2">
                 <h4 className="">題目總計</h4>
