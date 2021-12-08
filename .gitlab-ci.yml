@@ -18,7 +18,7 @@ test:
     - npm install
   script:
     - npm run start &
-    - sleep 120
+    - sleep 2
 
 deployJob:
   image: docker:19.03.12
