@@ -25,6 +25,18 @@ const getCourseInfo = (userToken, classID) => {
   return authAxios.get(`${serverURL}/v1/class/${classID}`, {transformResponse: [data => data]})
 };
 
+const deleteCourse = (userToken, class_id) => {
+  const authAxios = axios.create({
+    baseURL: serverURL,
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    },
+  })
+  return authAxios.delete(`${serverURL}/v1/class/${class_id}`, {
+    "class_id ": class_id ,
+  })
+}
+
 export {
-  getCourseList, getCourseInfo
+  getCourseList, getCourseInfo, deleteCourse
 };

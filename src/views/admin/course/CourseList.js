@@ -9,7 +9,7 @@ import {
   CInput, CSelect,
 } from '@coreui/react';
 import { toast } from 'react-toastify';
-import { getCourseList, getCourseInfo } from '../../../api/page/course/api';
+import { getCourseList, getCourseInfo, deleteCourse } from '../../../api/page/course/api';
 import { getUserInfoById } from '../../../api/page/user/api';
 
 const CourseSideBar = [
@@ -33,16 +33,16 @@ const CourseSideBar = [
   }
 ]
 
-const usersData = [
-  { id: 0, class_name: '程式設計(上)', teacher: '俞旭昇' },
-  { id: 1, class_name: '程式設計(下)', teacher: '俞旭昇' },
-  { id: 2, class_name: '軟體工程(上)', teacher: '陳建宏' },
-  { id: 3, class_name: '網頁設計(上)', teacher: '陳彥錚' },
-  { id: 4, class_name: '網頁設計(下)', teacher: '陳彥錚' },
-  { id: 5, class_name: '軟體工程(下)', teacher: '陳建宏' },
-  { id: 6, class_name: '1091 程式設計', teacher: '俞旭昇' },
-  { id: 7, class_name: '1092 程式設計', teacher: '俞旭昇' },
-]
+// const usersData = [
+//   { id: 0, class_name: '程式設計(上)', teacher: '俞旭昇' },
+//   { id: 1, class_name: '程式設計(下)', teacher: '俞旭昇' },
+//   { id: 2, class_name: '軟體工程(上)', teacher: '陳建宏' },
+//   { id: 3, class_name: '網頁設計(上)', teacher: '陳彥錚' },
+//   { id: 4, class_name: '網頁設計(下)', teacher: '陳彥錚' },
+//   { id: 5, class_name: '軟體工程(下)', teacher: '陳建宏' },
+//   { id: 6, class_name: '1091 程式設計', teacher: '俞旭昇' },
+//   { id: 7, class_name: '1092 程式設計', teacher: '俞旭昇' },
+// ]
 
 const fields = [
   { key: 'class_name', label: '課程名稱', _style: { width: '30%' } },
@@ -120,6 +120,30 @@ const CourseList = () => {
         })
     }
   }
+  const submitDelete = (deleteClassID) => {
+    const options = {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+    };
+
+    const stringDeleteID = deleteClassID.toString();
+    const nowToken = localStorage.getItem('token')
+    console.log("deleteID：" + deleteClassID)
+    console.log(nowToken)
+    deleteCourse(nowToken, stringDeleteID)
+      .then(() => {
+        toast.error('刪除成功', options)
+        showCourseList();
+      })
+      .catch((error) => {
+        toast.error(error.response, options)
+        console.log(error)
+      })
+  }
   useEffect(() => {
     showCourseList();
   }, []);
@@ -132,6 +156,10 @@ const CourseList = () => {
         classInfo.class_id = classInfo.class_id.toString();
         classData.push(classInfo);
         teacherID.add(classInfo.teacher.toString());
+        // if (allTeacherName.user_id == teacherID){
+        //   teacherID = allTeacherName.username
+        //   console.log("teacherID"+teacherID)
+        // }
         if (tempClassID.length > 0) {
           getClassIndiData(token, tempClassID, classData, teacherID);
         } else {
@@ -140,6 +168,7 @@ const CourseList = () => {
           getUserInfo(token, teacherIDJSON);
           setAllCourse(classData);
           setAllTeacherID(teacherIDJSON);
+          // console.log(teacherIDJSON);
         }
       })
   }
@@ -148,13 +177,13 @@ const CourseList = () => {
     getUserInfoById(token, allTeacherID)
       .then((rs) => {
         setAllTeacherName(rs.data);
+        console.log(allTeacherName)
       })
       .catch((er) => {
         console.log(er.response.data.message);
       }
       )
   }
-  console.log(allCourse);
   const classID='717021008802840578';
   return (
     <>
@@ -252,7 +281,7 @@ const CourseList = () => {
           <CButton color="info">儲存</CButton>{' '}
         </CModalFooter>
       </CModal>
-      <CModal
+      {/* <CModal
         show={modalDelete}
         onClose={toggleDelete}
       >
@@ -267,13 +296,13 @@ const CourseList = () => {
           </CCol>
         </CModalBody>
         <CModalFooter>
-          <CButton
+          <CButtondeleteCourse
             color="secondary"
             onClick={toggleDelete}
           >Cancel</CButton>
           <CButton color="danger">確認刪除</CButton>{' '}
         </CModalFooter>
-      </CModal>
+      </CModal> */}
       <CDataTable
         items={allCourse}
         fields={fields}
@@ -292,7 +321,7 @@ const CourseList = () => {
                     color="danger"
                     shape="spill"
                     size="sm"
-                    onClick={() => toggleDelete(item.class_id)}
+                    onClick={() => {submitDelete(item.class_id); toggleDelete();}}
                   >
                     刪除
                   </CButton>
